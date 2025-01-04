@@ -26,7 +26,7 @@ app.post('/save', (req, res) => {
 });
 
 // Display the saved text
-app.get('/display', (req, res) => {
+app.get('/', (req, res) => {
     let content = '';
     if (fs.existsSync(FILE_PATH)) {
         content = fs.readFileSync(FILE_PATH, 'utf-8');
