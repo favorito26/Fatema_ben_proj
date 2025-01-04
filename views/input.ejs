@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Page</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Enter or Update Text</h1>
+    <form action="/save" method="POST">
+        <textarea name="userInput" rows="5" cols="30" placeholder="Enter your text here..."><%= content %></textarea>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
