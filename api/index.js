@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 const app = express();
@@ -11,8 +10,8 @@ app.set('views', path.join(__dirname, '../views'));  // Adjusted path for Vercel
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public'))); // Adjusted path for Vercel
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
 
 const FILE_PATH = './data.txt';
 
@@ -28,8 +27,17 @@ app.get('/admin', (req, res) => {
 // Save or update the text
 app.post('/save', (req, res) => {
     const userInput = req.body.userInput || '';
-    fs.writeFileSync(FILE_PATH, userInput, 'utf-8');
-    res.redirect('/');
+    console.log(req.body);  // Debugging the request body
+    if (!userInput) {
+        return res.status(400).send("Input cannot be empty");
+    }
+    try {
+        fs.writeFileSync(FILE_PATH, userInput, 'utf-8');
+        res.redirect('/');
+    } catch (error) {
+        console.error("Error writing to file", error);
+        res.status(500).send("Internal server error");
+    }
 });
 
 // Display the saved text
