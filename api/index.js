@@ -4,12 +4,14 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
+// Set up EJS view engine
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));  // Adjusted path for Vercel
 
-// Update views path to work in Vercel's environment
-app.set('views', path.join(__dirname, 'views'));
+// Serve static files
+app.use(express.static(path.join(__dirname, '../public'))); // Adjusted path for Vercel
 
-app.use(express.static('public'));
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const FILE_PATH = './data.txt';
@@ -39,7 +41,7 @@ app.get('/', (req, res) => {
     res.render('display', { content });
 });
 
-// Start the server
+// Start the server (for local development only, Vercel doesn't use this)
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
